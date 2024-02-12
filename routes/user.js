@@ -9,7 +9,11 @@ const {validateFields,validateJWT,isAdminRole,hasRole } = require('../middleware
 
 const router = Router();
 
-router.get('/', userGet);
+router.get('/',[
+        validateJWT
+    ] ,
+
+userGet);
 
 router.put('/:id',[
     check('id','This is not a Valid Id').isMongoId(),
@@ -31,14 +35,15 @@ router.post('/', [
 ], userPost);
 
 
-router.delete('/:id', 
-    validateJWT,
-    //isAdminRole,
-    hasRole('ADMIN_ROLE'),
-    check('id','This is not a Valid Id').isMongoId(),
-    check('id').custom(userExistsById),
-    validateFields
-,userDelete);
+router.delete('/:id', [
+        validateJWT,
+        //isAdminRole,
+        hasRole('ADMIN_ROLE'),
+        check('id','This is not a Valid Id').isMongoId(),
+        check('id').custom(userExistsById),
+        validateFields
+    ]
+    ,userDelete);
 
 router.patch('/', userPatch);
 
