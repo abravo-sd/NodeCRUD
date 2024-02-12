@@ -72,6 +72,8 @@ const userDelete = async(req,res = response) => {
 
     const {id} =req.params;
 
+    const authenticatesUser = req.user;
+
     //Permanent Delete NOT TO USE
     //const user = await User.findByIdAndDelete(id);
 
@@ -80,7 +82,8 @@ const userDelete = async(req,res = response) => {
 
 
     res.json({
-        user
+        user,
+        authenticatesUser
     })
 }
 
